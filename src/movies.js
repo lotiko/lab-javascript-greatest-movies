@@ -20,47 +20,37 @@ function getAllDirectors(movies) {
 }
 getAllDirectors(movies);
 // Iteration 2: Steven Spielberg. The best? - How many drama movies did STEVEN SPIELBERG direct?
-function howManyMovies(arrMovies, genre, nameDirector) {
+function howManyMovies(arrMovies) {
+  /// on trie les movies avec que les film ayant comme directeur Spielberg
   let arrSpielbergMovie = arrMovies.filter(function (movie) {
     if (movie.director === "Steven Spielberg") return true;
     return false;
   });
+  // si aucun movie de spielberg on return 0
   if (arrSpielbergMovie.length === 0) return 0;
+  // dans les film de spielberg on veut que les drame dans un nouveau tableau
   let arrSpielDrama = arrSpielbergMovie.filter(function (movie) {
     if (movie.genre.indexOf("Drama") >= 0) return true;
     return false;
   });
+  // on renvoi la longueur du tableau qui donne les film dirigé par spileberg et sont des drame
   return arrSpielDrama.length;
-  // });
-  // let nbMovieByspielberg = arrDrama.reduce(function (accu, movie) {
-  //     if (movie.director === 'Steven Spielberg') {
-  //         return accu++;
-  //     } else {
-  //         return accu;
-  //     }
-  // }, 0);
-  // let arrDrama = arrMovies.filter(function (movie) {
-
-  // let nbMovieByspielberg = arrDrama.reduce(function (accu, movie) {
-  //     if (movie.director === 'Steven Spielberg') {
-  //         return accu++;
-  //     } else {
-  //         return accu;
-  //     }
-  // }, 0);
-
-  //   let arrByGenreAndDirectorName = arrMovies.filter(function (movie) {
-  //     if (movie.director === nameDirector && ) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
-  return arrByGenreAndDirectorName.length;
 }
-howManyMovies(movies, "Drama", "Steven Spielberg");
+howManyMovies(movies);
 // Iteration 3: All rates average - Get the average of all rates with 2 decimals
-
+function ratesAverage(arrMovies) {
+  let divisor = arrMovies.length;
+  if (divisor === 0) return 0;
+  let avg =
+    arrMovies.reduce(function (acc, movie) {
+      if (movie.rate) {
+        return acc + movie.rate;
+      } else {
+        return acc;
+      }
+    }, 0) / divisor;
+  return Number(avg.toFixed(2));
+}
 // Iteration 4: Drama movies - Get the average of Drama Movies
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
