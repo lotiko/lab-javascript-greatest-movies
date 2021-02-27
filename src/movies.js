@@ -60,7 +60,34 @@ function dramaMoviesRate(arrMovies) {
   return ratesAverage(arrDrama);
 }
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
+function orderByYear(arrMovies) {
+  let arrOrderByYear = arrMovies.sort(function (a, b) {
+    //return a.year - b.year;
+    if (a.year < b.year) return -1;
+    if (a.year > b.year) return 1;
+    if (a.year === b.year) {
+      return a.title.localeCompare(b.title);
+    }
+  });
+  //   let arrYear = arrOrderByYear.map((el) => el.year);
+  //   let arrMoviesByYear = [];
+  //   arrYear.forEach((element) => {
+  //     arrMoviesByYear.push(arrMovies.filter((el) => el.year === element));
+  //   });
+  //   console.log(arrMoviesByYear);
+  //   arrMoviesByYear.forEach(function (element) {
+  //     if (element.length === 0) return element;
+  //     return element.sort(function (a, b) {
+  //       console.log(a, b);
+  //       a.title.localeCompare(b.title);
+  //     });
+  //   });
+  //   let ret = [];
+  //   arrMoviesByYear.forEach((element) => ret.push(...element));
+  //   console.log(ret);
 
+  return [...arrOrderByYear];
+}
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
