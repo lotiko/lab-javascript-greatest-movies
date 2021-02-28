@@ -61,7 +61,8 @@ function dramaMoviesRate(arrMovies) {
 }
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 function orderByYear(arrMovies) {
-  let arrOrderByYear = arrMovies.sort(function (a, b) {
+  let arrCopy = [...arrMovies];
+  let arrOrderByYear = arrCopy.sort(function (a, b) {
     //return a.year - b.year;
     if (a.year < b.year) return -1;
     if (a.year > b.year) return 1;
@@ -69,27 +70,29 @@ function orderByYear(arrMovies) {
       return a.title.localeCompare(b.title);
     }
   });
-  //   let arrYear = arrOrderByYear.map((el) => el.year);
-  //   let arrMoviesByYear = [];
-  //   arrYear.forEach((element) => {
-  //     arrMoviesByYear.push(arrMovies.filter((el) => el.year === element));
-  //   });
-  //   console.log(arrMoviesByYear);
-  //   arrMoviesByYear.forEach(function (element) {
-  //     if (element.length === 0) return element;
-  //     return element.sort(function (a, b) {
-  //       console.log(a, b);
-  //       a.title.localeCompare(b.title);
-  //     });
-  //   });
-  //   let ret = [];
-  //   arrMoviesByYear.forEach((element) => ret.push(...element));
-  //   console.log(ret);
-
-  return [...arrOrderByYear];
+  return arrOrderByYear;
 }
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
-
+function orderAlphabetically(arrMovies) {
+  let arrCopy = [...arrMovies];
+  let arrOrderByOrderedTitle = arrCopy.sort(function (a, b) {
+    return a.title.localeCompare(b.title);
+  });
+  let i = 0;
+  let ret = [];
+  if (arrOrderByOrderedTitle.length < 21) {
+    while (i < arrOrderByOrderedTitle.length) {
+      ret.push(arrOrderByOrderedTitle[i].title);
+      i++;
+    }
+  } else {
+    while (i < 20) {
+      ret.push(arrOrderByOrderedTitle[i].title);
+      i++;
+    }
+  }
+  return ret;
+}
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
 
 // BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
