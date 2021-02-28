@@ -94,5 +94,82 @@ function orderAlphabetically(arrMovies) {
   return ret;
 }
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
-
+function turnHoursToMinutes(arrMovies) {
+  let arrCopyWithDurationNumber = arrMovies.map((movie) => ({
+    ...movie,
+    duration: literalHourToNumberMinutes(movie.duration),
+  }));
+  return arrCopyWithDurationNumber;
+}
+function literalHourToNumberMinutes(strHour) {
+  let reg = /(?<nbHour>\d+)h\s(?<nbMin>\d+)min|(?<nbHourOnly>\d+)h|(?<nbMinOnly>\d+)min/gi;
+  let resultReg = reg.exec(strHour).groups;
+  if (resultReg.nbHourOnly) {
+    return Number(resultReg.nbHourOnly) * 60;
+  } else if (resultReg.nbMinOnly) {
+    return Number(resultReg.nbMinOnly);
+  } else {
+    return Number(resultReg.nbHour) * 60 + Number(resultReg.nbMin);
+  }
+}
 // BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
+function getAllByKey(arrMovies, key) {
+  let ret = arrMovies.map(function (movie) {
+    return movie[key];
+  });
+  return ret;
+}
+function bestYearAvg(arrMovies) {
+  if (arrMovies.length === 0) return null;
+  let avgRateByYear = arrMovies.reduce(function (accu, val) {
+    let indexYearInAccu = accu.findIndex((el) => el.year === val.year, this);
+    if (indexYearInAccu >= 0) {
+      accu[indexYearInAccu].rate = (accu[indexYearInAccu].rate + val.rate) / 2;
+      return accu;
+    } else {
+      let newYear = { year: val.year, rate: val.rate };
+      accu.push(newYear);
+      return accu;
+    }
+  }, []);
+  avgRateByYear.sort(function (a, b) {
+    if (a.rate < b.rate) return 1;
+    if (a.rate > b.rate) return -1;
+    if (a.rate === b.rate) {
+      return a.year - b.year;
+    }
+  });
+  return `The best year was ${avgRateByYear[0].year} with an average rate of ${Number(
+    avgRateByYear[0].rate.toFixed(1)
+  )}`;
+}
+
+//////////////// Utils
+/**
+ * return the sum of all number in array of number, if no number in array return 0
+ *
+ * @param {number[]} arrayOfNumber
+ * @returns {number} sum or zero
+ */
+function sumNumbers(arrayOfNumber) {
+  if (arrayOfNumber.length === 0) {
+    return 0;
+  }
+  let sum = 0;
+  for (const number of arrayOfNumber) {
+    sum += number;
+  }
+  return sum;
+}
+/**
+ * return the average of array number
+ *
+ * @param {number[]} arrayOfNumber
+ * @returns {?number}
+ */
+function averageNumbers(arrayOfNumber) {
+  if (arrayOfNumber.length === 0) {
+    return null;
+  }
+  return sumNumbers(arrayOfNumber) / arrayOfNumber.length;
+}
