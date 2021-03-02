@@ -103,14 +103,21 @@ function ratesAverage(arrMovies) {
     }, 0) / divisor;
   return Number(avg.toFixed(2));
 }
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // Iteration 4: Drama movies - Get the average of Drama Movies
+/**
+ * return the average rate of Drama movies in array of movies
+ * @param {object[]} arrMovies
+ */
 function dramaMoviesRate(arrMovies) {
-  let arrDrama = arrMovies.filter(function (movie) {
-    if (movie.genre.indexOf("Drama") >= 0) return true;
-    return false;
-  });
+  let arrDrama = arrMoviesByCriteria(arrMovies, { genre: "Drama" });
   return ratesAverage(arrDrama);
 }
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 function orderByYear(arrMovies) {
   let arrCopy = [...arrMovies];
