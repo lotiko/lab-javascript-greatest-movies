@@ -119,6 +119,10 @@ function dramaMoviesRate(arrMovies) {
 
 ////////////////////////////////////////////////////////////
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
+/**
+ * return new array of movies sort by year and alphabetic order
+ * @param {object[]} arrMovies
+ */
 function orderByYear(arrMovies) {
   let arrCopy = [...arrMovies];
   let arrOrderByYear = arrCopy.sort(function (a, b) {
@@ -131,7 +135,14 @@ function orderByYear(arrMovies) {
   });
   return arrOrderByYear;
 }
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
+/**
+ * return a new array of movies sorted by alphabetic order of title
+ * @param {object[]} arrMovies
+ */
 function orderAlphabetically(arrMovies) {
   let arrCopy = [...arrMovies];
   let arrOrderByOrderedTitle = arrCopy.sort(function (a, b) {
@@ -152,14 +163,14 @@ function orderAlphabetically(arrMovies) {
   }
   return ret;
 }
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
-function turnHoursToMinutes(arrMovies) {
-  let arrCopyWithDurationNumber = arrMovies.map((movie) => ({
-    ...movie,
-    duration: literalHourToNumberMinutes(movie.duration),
-  }));
-  return arrCopyWithDurationNumber;
-}
+/**
+ * parse string hour min or only hour or only min  like "1h 56min" and return number of minute
+ * @param {string} strHour
+ */
 function literalHourToNumberMinutes(strHour) {
   let reg = /(?<nbHour>\d+)h\s(?<nbMin>\d+)min|(?<nbHourOnly>\d+)h|(?<nbMinOnly>\d+)min/gi;
   let resultReg = reg.exec(strHour).groups;
@@ -171,12 +182,29 @@ function literalHourToNumberMinutes(strHour) {
     return Number(resultReg.nbHour) * 60 + Number(resultReg.nbMin);
   }
 }
-// BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
+/**
+ * return a new array of movies with duration convert from string to number of minutes
+ * @param {object[]} arrMovies
+ */
+function turnHoursToMinutes(arrMovies) {
+  let arrCopyWithDurationNumber = [...arrMovies].map((movie) => ({
+    ...movie,
+    duration: literalHourToNumberMinutes(movie.duration),
+  }));
+  return arrCopyWithDurationNumber;
+}
+////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////
+// BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
+/**
+ * find the year with the best rate average of movies in array of movies
+ * @param {object[]} arrMovies
+ */
 function bestYearAvg(arrMovies) {
   if (arrMovies.length === 0) return null;
   let avgRateByYear = arrMovies.reduce(function (accu, val) {
-    let indexYearInAccu = accu.findIndex((el) => el.year === val.year, this);
+    let indexYearInAccu = accu.findIndex((el) => el.year === val.year);
     if (indexYearInAccu >= 0) {
       accu[indexYearInAccu].rate = (accu[indexYearInAccu].rate + val.rate) / 2;
       return accu;
@@ -197,33 +225,4 @@ function bestYearAvg(arrMovies) {
     avgRateByYear[0].rate.toFixed(1)
   )}`;
 }
-
-//////////////// Utils
-/**
- * return the sum of all number in array of number, if no number in array return 0
- *
- * @param {number[]} arrayOfNumber
- * @returns {number} sum or zero
- */
-function sumNumbers(arrayOfNumber) {
-  if (arrayOfNumber.length === 0) {
-    return 0;
-  }
-  let sum = 0;
-  for (const number of arrayOfNumber) {
-    sum += number;
-  }
-  return sum;
-}
-/**
- * return the average of array number
- *
- * @param {number[]} arrayOfNumber
- * @returns {?number}
- */
-function averageNumbers(arrayOfNumber) {
-  if (arrayOfNumber.length === 0) {
-    return null;
-  }
-  return sumNumbers(arrayOfNumber) / arrayOfNumber.length;
-}
+////////////////////////////////////////////////////////////
