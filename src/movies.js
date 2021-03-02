@@ -1,42 +1,90 @@
-// Iteration 1: All directors? - Get the array of all directors.
-
-// _Bonus_: It seems some of the directors had directed multiple movies so they will pop up multiple times in the array of directors. How could you "clean" a bit this array and make it unified (without duplicates)?
+/////////// object structure of one element of movies array
 // {
-//     "title": "The Shawshank Redemption",
-//     "year": 1994,
-//     "director": "Frank Darabont",
-//     "duration": "2h 22min",
-//     "genre": [
-//       "Crime",
-//       "Drama"
-//     ],
-//     "rate": 9.3
+// "title": "The Shawshank Redemption",
+// "year": 1994,
+// "director": "Frank Darabont",
+// "duration": "2h 22min",
+// "genre": [
+//   "Crime",
+//   "Drama"
+// ],
+// "rate": 9.3
 //   }
-function getAllDirectors(movies) {
-  let directors = movies.map(function (movie) {
-    return movie.director;
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+// Iteration 1: All directors? - Get the array of all directors.
+// _Bonus_: It seems some of the directors had directed multiple movies so they will pop up multiple times in the array of directors. How could you "clean" a bit this array and make it unified (without duplicates)?
+/**
+ *  return values of each element of movies by key, unique is flag, to have array with unique values set it to true (default false)
+ * @param {object[]} movies
+ * @param {string} key
+ * @param {boolean} unique
+ */
+function getAllByKey(movies, key, unique = false) {
+  let arrbyKey = movies.map(function (movie) {
+    return movie[key];
   });
-  return directors;
+  if (unique) {
+    return [...new Set(arrbyKey)];
+  } else {
+    return arrbyKey;
+  }
+}
+/**
+ * return all directors of movies
+ * @param {object} movies
+ * @param {boolean} unique set it to true to have array with unique values (default false)
+ */
+function getAllDirectors(movies, unique = false) {
+  return getAllByKey([...movies], "director", unique);
 }
 getAllDirectors(movies);
+getAllDirectors(movies, true);
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // Iteration 2: Steven Spielberg. The best? - How many drama movies did STEVEN SPIELBERG direct?
+/**
+ * return number of Drama movies by Steven Spielberg in movies arr
+ * @param {object[]} arrMovies
+ */
 function howManyMovies(arrMovies) {
-  /// on trie les movies avec que les film ayant comme directeur Spielberg
-  let arrSpielbergMovie = arrMovies.filter(function (movie) {
-    if (movie.director === "Steven Spielberg") return true;
-    return false;
-  });
-  // si aucun movie de spielberg on return 0
-  if (arrSpielbergMovie.length === 0) return 0;
-  // dans les film de spielberg on veut que les drame dans un nouveau tableau
-  let arrSpielDrama = arrSpielbergMovie.filter(function (movie) {
-    if (movie.genre.indexOf("Drama") >= 0) return true;
-    return false;
-  });
-  // on renvoi la longueur du tableau qui donne les film dirigé par spileberg et sont des drame
-  return arrSpielDrama.length;
+  return arrMoviesByCriteria(arrMovies).length;
+}
+//// my bonus
+/**
+ * return filtered array by criteria
+ * @param {object[]} arrMovies
+ * @param {object} criteria  keys are criteria
+ */
+function arrMoviesByCriteria(
+  arrMovies,
+  criteria = { director: "Steven Spielberg", genre: "Drama" }
+) {
+  // console.log(criteria);
+  let filteredArr = [...arrMovies];
+  // on va filtrer en boucle sur chaque critére
+  for (const criterion in criteria) {
+    // on verifie si le type du critére et un array et applique le bon process en conséquence
+    if (criterion === "genre") {
+      filteredArr = filteredArr.filter(function (movie) {
+        if (movie.genre.indexOf(criteria[criterion]) >= 0) return true;
+        return false;
+      });
+    } else {
+      filteredArr = filteredArr.filter(function (movie) {
+        if (movie.director === criteria[criterion]) return true;
+        return false;
+      });
+    }
+  }
+  return filteredArr;
 }
 howManyMovies(movies);
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 // Iteration 3: All rates average - Get the average of all rates with 2 decimals
 function ratesAverage(arrMovies) {
   let divisor = arrMovies.length;
@@ -113,12 +161,7 @@ function literalHourToNumberMinutes(strHour) {
   }
 }
 // BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
-function getAllByKey(arrMovies, key) {
-  let ret = arrMovies.map(function (movie) {
-    return movie[key];
-  });
-  return ret;
-}
+
 function bestYearAvg(arrMovies) {
   if (arrMovies.length === 0) return null;
   let avgRateByYear = arrMovies.reduce(function (accu, val) {

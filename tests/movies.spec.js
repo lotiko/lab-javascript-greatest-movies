@@ -37,6 +37,40 @@ describe(" All directors - getAllDirectors", () => {
     ];
     expect(getAllDirectors(testArr)).toEqual(["Stanley Kubrick", "Quentin Tarantino"]);
   });
+  /*
+   * 1. bonus getAllDirectors with unique value
+   */
+
+  it("Should return a new array with unique values with flag unique set to true", () => {
+    const testArr2 = [
+      {
+        title: "Paths of Glory",
+        year: 1957,
+        director: "Stanley Kubrick",
+        duration: "1h 28min",
+        genre: ["Drama", "War"],
+        rate: 8.4,
+      },
+      {
+        title: "Django Unchained",
+        year: 2012,
+        director: "Quentin Tarantino",
+        duration: "2h 45min",
+        genre: ["Drama", "Western"],
+        rate: 8.4,
+      },
+      {
+        title: "Reservoir Dogs",
+        year: 1992,
+        director: "Quentin Tarantino",
+        duration: "1h 39min",
+        genre: ["Crime", "Drama", "Thriller"],
+        rate: 8.3,
+      },
+    ];
+    const unique = true;
+    expect(getAllDirectors(testArr2, unique)).toEqual(["Stanley Kubrick", "Quentin Tarantino"]);
+  });
 });
 
 /*
@@ -107,6 +141,36 @@ describe("Get how many movies - howManyMovies", () => {
 
   it("Should return 4", () => {
     expect(howManyMovies(movies)).toBe(4);
+  });
+  // my bonus test
+  it("James McTeigue Thriller movies length ! Should return 2 with arrMoviesByCriteria()", () => {
+    expect(
+      arrMoviesByCriteria(
+        [
+          {
+            director: "James McTeigue",
+            genre: ["Action", "Drama", "Thriller"],
+          },
+          {
+            director: "James McTeigue",
+            genre: ["Action", "Drama"],
+          },
+          {
+            director: "James McTeigue",
+            genre: ["Action", "Drama", "Thriller"],
+          },
+          {
+            director: "Karl Moses",
+            genre: ["Thriller", "Drama"],
+          },
+          {
+            director: "Steven Spielberg",
+            genre: ["Drama", "Thriller"],
+          },
+        ],
+        { director: "James McTeigue", genre: "Thriller" }
+      ).length
+    ).toBe(2);
   });
 });
 
