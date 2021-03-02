@@ -86,6 +86,10 @@ howManyMovies(movies);
 
 ////////////////////////////////////////////////////////////
 // Iteration 3: All rates average - Get the average of all rates with 2 decimals
+/**
+ * return average of all rates in a array of movies
+ * @param {object[]} arrMovies
+ */
 function ratesAverage(arrMovies) {
   let divisor = arrMovies.length;
   if (divisor === 0) return 0;
