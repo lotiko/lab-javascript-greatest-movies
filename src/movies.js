@@ -96,7 +96,7 @@ function ratesAverage(arrMovies) {
   let avg =
     arrMovies.reduce(function (acc, movie) {
       if (movie.rate) {
-        return acc + movie.rate;
+        return acc + (Number(movie.rate) || 0);
       } else {
         return acc;
       }
